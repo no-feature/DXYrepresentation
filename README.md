@@ -1,0 +1,4 @@
+DXYrepresentation
+=================
+
+Multiplicité des résultats du plotter  Trace/trame/texture  Couches  Typon -> transparence -> trace -> specificité  Résistance/confrontation de l'outil plotter aux outils de reproduction de son époque  Insolation avec un rétroprojecteur plaque offset/sérigraphie  Document de test du plotter -> apparition d'une fonction, d'une époque.   Confrontation de deux modes de reproductions, le plotter qui correspond aux années 1960 et à un usage spécifique et l'offset qui correspond aux attentes de productions actuelles.  1- Proposition d'impression de page test offset en utilisant des trames réalisées avec le plotter. > Décomposition des couche cmjn, apparition de l'outils plotter au travers de l'offset   2- Plottage direct sur la plaque > décalage production unique/en série   Images: - XVIIè siècle plan, coupe et vue des façades de palais ou d'hôtels particuliers. Architecture et fortifications.  -        
