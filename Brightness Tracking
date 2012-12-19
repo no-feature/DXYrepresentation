@@ -1,0 +1,88 @@
+/**
+ * Brightness Tracking 
+ * by Golan Levin. 
+ * 
+ * Tracks the brightest pixel in a live video signal. 
+ */
+import processing.pdf.*;
+import processing.video.*;
+
+Capture video;
+ArrayList coords;
+String command;
+
+class Coord { 
+  int x, y; 
+  Coord (int in_x, int in_y) {  
+    x = in_x;
+    y = in_y; 
+  }
+}
+
+void setup() {
+  size(640, 480); // Change size to 320 x 240 if too slow at 640 x 480
+  // Uses the default video input, see the reference if this causes an error
+  beginRecord(PDF, "everything.pdf"); 
+  video = new Capture(this, width, height, 30);
+  coords = new ArrayList();
+  noStroke();
+  smooth();
+      background(255);
+
+}
+
+
+
+void draw() {
+  if (video.available()) {
+    video.read();
+    int brightestX = 0; // X-coordinate of the brightest video pixel
+    int brightestY = 0; // Y-coordinate of the brightest video pixel
+    float brightestValue = 0; // Brightness of the brightest video pixel
+    // Search for the brightest pixel: For each row of pixels in the video image and
+    // for each pixel in the yth row, compute each pixel's index in the video
+    video.loadPixels();
+    int index = 0;
+    for (int y = 0; y < video.height; y++) {
+      for (int x = 0; x < video.width; x++) {
+        // Get the color stored in the pixel
+        int pixelValue = video.pixels[index];
+        // Determine the brightness of the pixel
+        float pixelBrightness = brightness(pixelValue);
+        // If that value is brighter than any previous, then store the
+        // brightness of that pixel, as well as its (x,y) location
+        if (pixelBrightness > brightestValue) {
+          brightestValue = pixelBrightness;
+          brightestY = y;
+          brightestX = x;
+        }
+           
+        index++;
+      }
+    }
+    // Draw a large, yellow circle at the brightest pixel
+    fill(0);
+    ellipse(brightestX, brightestY, 10 , 10);
+    
+    int hpglX = brightestX * (16158 / video.width);
+    int hpglY = 11040 - (brightestY * (11040 / video.height));
+    
+    coords.add(new Coord (hpglX, hpglY));
+  } 
+
+  }
+   void keyPressed() {
+  if (key == 'q') {
+    endRecord();
+    for (int i = 0; i < coords.size(); i++) { 
+      Coord coord = (Coord) coords.get(i);
+      if (i == 0) {
+        command = "SP1;PA" + coord.x + "," + coord.y + ";PD";
+      } else {
+        command += coord.x + "," + coord.y + ",";
+      }
+    }
+    println (command);
+    exit();
+  }
+}
